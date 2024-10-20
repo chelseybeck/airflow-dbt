@@ -1,0 +1,21 @@
+# Environment variables
+.env
+.env.my
+
+# Logs
+logs/
+
+# Database
+pg_data/
+
+# Virtual environments
+venv/
+
+# Terraform state
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+
+# Python cache files
+__pycashe__/
+*.pyc

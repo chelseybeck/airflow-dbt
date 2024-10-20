@@ -1,0 +1,14 @@
+analytics_pipeline:
+  outputs:
+    dev:
+      dataset: prod
+      job_execution_timeout_seconds: 120
+      job_retries: 1
+      location: US
+      method: service-account
+      keyfile: "{{ env_var('KEY_FILE') }}"
+      priority: interactive
+      project: "{{ env_var('GCP_PROJECT') }}"
+      threads: 4
+      type: bigquery
+  target: dev

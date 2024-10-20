@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw_sensor_data
+    description: Dirty sensor data collected from robots
+    database: storied-storm-353916
+    schema: raw_sensor_data
+    tables:
+      - name: sensor_data

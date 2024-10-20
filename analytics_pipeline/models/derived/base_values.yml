@@ -1,0 +1,34 @@
+version: 2
+models:
+  - name: base_values
+    description: >
+      'Recorded values from robots, cleaned and interpolated.'
+    columns:
+      - name: observation_time
+        data_type: TIMESTAMP
+        data_tests:
+          - not_null
+      - name: fx_1
+        data_type: FLOAT
+      - name: fx_2
+        data_type: FLOAT
+      - name: fy_1
+        data_type: FLOAT
+      - name: fy_2
+        data_type: FLOAT
+      - name: fz_1
+        data_type: FLOAT
+      - name: fz_2
+        data_type: FLOAT
+      - name: x_1
+        data_type: FLOAT
+      - name: x_2
+        data_type: FLOAT
+      - name: y_1
+        data_type: FLOAT
+      - name: y_2
+        data_type: FLOAT
+      - name: z_1
+        data_type: FLOAT
+      - name: z_2
+        data_type: FLOAT
