@@ -1,12 +1,12 @@
-# Analytics Pipeline Setup using dbt, Airflow, and Bigquery
+# Analytics Pipeline | dbt, Airflow, and Bigquery
 
-This repository contains the setup and instructions to run an analytics pipeline locally using Apache Airflow to schedule dbt jobs for a BigQuery warehouse.
+This repository contains a demo with instructions for scheduling an analytics pipeline locally using Apache Airflow to schedule dbt jobs for a BigQuery warehouse.
 
 We're using Google Cloud Platform (GCP) and BigQuery (BQ) for the purposes of this demo, but if you're familiar with another public cloud or warehouse, you can substitute where applicable (i.e. `dbt-bigquery` -> `dbt-snowflake`).
 
 ## Getting Started
 
-### Clone this repo
+### Clone this repo (or fork it if you'd like to contribute)
 Clone the repo and open a terminal from the cloned directory
 
 ```bash
@@ -24,11 +24,11 @@ git clone https://github.com/chelseybeck/airflow-dbt.git
   - BigQuery Data Viewer
   - Bigquery Job User
 
-  The service account can be [created manually](https://cloud.google.com/iam/docs/service-accounts-create#creating) in the GCP UI or using the Terraform modules in the `terraform` directory - [see details](/terraform/README.md)
+  The service account can be [created manually](https://cloud.google.com/iam/docs/service-accounts-create#creating) in the GCP UI or using the Terraform module in the `terraform` directory - [see details](/terraform/README.md)
 
 ## Python Environment Setup
 
-It's recommended to use a virtual environment to isolate your dependencies. Here's how to set it up:
+It's recommended to use a virtual environment to isolate dependencies. Here's how to set it up:
 
 1. Create a virtual environment:
 
@@ -60,7 +60,7 @@ It's recommended to use a virtual environment to isolate your dependencies. Here
 pip install -r requirements.txt
 ```
 
-## Setup Environment Variables
+## Set up Environment Variables
 
 1. Copy the example `.env` file
     ```bash
@@ -86,9 +86,9 @@ pip install -r requirements.txt
     ```
     dags_folder = /Users/username/GitHub/airflow-dbt/dags
     ```
-    Remove authentication - there's no need to authenticate when running locally
+    Remove authentication (easiest option if running demo locally, otherwise [set it up](https://airflow.apache.org/docs/apache-airflow-providers-fab/stable/auth-manager/api-authentication.html))
     ```
-    auth_backend #delete this line
+    auth_backend # delete this line or set it up
     ```
     Optional - remove DAG examples. When set to true, many examples are provided on the home page in the UI when Airflow is started
     ```
