@@ -66,7 +66,7 @@ pip install -r requirements.txt
     ```bash
     cp .env.example .env
     ```
-2. Replace the file paths with your system paths
+2. Replace the file paths in `.env` with your system paths
 
 ## Initialize Airflow and Run DAG
 
