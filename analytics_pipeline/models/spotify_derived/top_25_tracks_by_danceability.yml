@@ -1,0 +1,22 @@
+version: 2
+models:
+  - name: top_25_songs_by_danceability
+    description: >
+      'Top 25 songs ranked by danceability.'
+    columns:
+      - name: track_name
+        data_type: STRING
+        data_tests:
+          - not_null
+      - name: artist_name
+        data_type: STRING
+        data_tests:
+          - not_null
+      - name: avg_danceability
+        data_type: INTEGER
+        data_tests:
+          - not_null
+      - name: avg_energy
+        data_type: INTEGER
+        data_tests:
+          - not_null

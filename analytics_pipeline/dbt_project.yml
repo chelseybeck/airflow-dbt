@@ -34,7 +34,7 @@ models:
     # Apply to all models under analytics_pipeline
     +on_schema_change: "append_new_columns"
 
-    # Transformed sensor data, materialized as tables in the prod_sensor_data dataset
-    derived:
-      +schema: sensor_data  # Specify the BigQuery dataset
+    # Transformed Spotify data, materialized as tables in the spotify_derived dataset
+    spotify_derived:
+      +schema: spotify_derived  # Specify the BigQuery dataset
       +materialized: table

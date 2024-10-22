@@ -1,9 +1,9 @@
 version: 2
 
 sources:
-  - name: raw_sensor_data
-    description: Dirty sensor data collected from robots
+  - name: raw_ingestion
+    description: A sample of metadata from songs played on Spotify in 2023.
     database: storied-storm-353916
-    schema: raw_sensor_data
+    schema: raw_ingestion
     tables:
-      - name: sensor_data
+      - name: spotify_top_2023_metadata

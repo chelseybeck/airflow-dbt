@@ -1,7 +1,7 @@
 analytics_pipeline:
   outputs:
     dev:
-      dataset: prod
+      dataset: dev # prefixes dataset names like dev_spotify
       job_execution_timeout_seconds: 120
       job_retries: 1
       location: US

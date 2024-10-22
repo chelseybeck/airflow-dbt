@@ -1,0 +1,14 @@
+version: 2
+models:
+  - name: top_10_artists_by_total_streams
+    description: >
+      'A count of total streams grouped by artist'
+    columns:
+      - name: artist_name
+        data_type: STRING
+        data_tests:
+          - not_null
+      - name: total_streams
+        data_type: INTEGER
+        data_tests:
+          - not_null
