@@ -1,4 +1,4 @@
-analytics_pipeline:
+analytics:
   outputs:
     dev:
       dataset: dev # prefixes dataset names like dev_spotify
