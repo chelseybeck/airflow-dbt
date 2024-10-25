@@ -109,6 +109,12 @@ pip install -r requirements.txt
     Access the Airflow UI at `localhost:8080/home`
     [airflow home](http://0.0.0.0:8080/home)
 
-4. Run the DAG:
+4. Start the scheduler
+
+    ```bash
+    airflow scheduler
+    ```
+
+5. Run the DAG:
   - Click on the DAG `dbt_run_dag`
   - Click the 'play' button to trigger the DAG (upper right corner)
