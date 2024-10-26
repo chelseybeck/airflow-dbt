@@ -115,6 +115,11 @@ pip install -r requirements.txt
     airflow scheduler
     ```
 
-5. Run the DAG:
-  - Click on the DAG `dbt_run_dag`
+5. Run the DAGs from [Airflow's UI](http://0.0.0.0:8080/home):
+  - Click on the DAG `spotify_ingestion_dag`
+    - Loads Spotify data from a csv file into BigQuery
+  - Click the 'play' button to trigger the DAG (upper right corner)
+
+  - Click on the DAG `daily_dbt_dag`
+    - Runs dbt jobs ([models directory](/analytics/models)) 
   - Click the 'play' button to trigger the DAG (upper right corner)
