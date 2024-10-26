@@ -13,7 +13,7 @@ Clone the repo and open a terminal from the cloned directory
 git clone https://github.com/chelseybeck/airflow-dbt.git
 ```
 
-This repo is updated regularly, so pull in changes to get the latest
+This repo is updated regularly, so pull often (at least daily) to get the latest
 
 ```bash
 git pull
