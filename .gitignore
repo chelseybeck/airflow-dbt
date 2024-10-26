@@ -19,3 +19,6 @@ terraform.tfstate.backup
 # Python cache files
 __pycashe__/
 *.pyc
+
+# dbt's anonymous usage tracking
+.User.yml
