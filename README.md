@@ -66,9 +66,16 @@ We're using poetry (installation is a pre-requisite)
         airflow info
         ```
     - Update DAG directory
-    Navigate to Airflow's home directory and open the `airflow.cfg` file. Change the `dags_folder` path to the `airflow-dbt` code repository and save. For example:
+    
+    Navigate to Airflow's home directory and open the `airflow.cfg` file. 
+    
+    ```bash
+    nano ~/airflow/airflow.cfg
+    ```
+
+    Change the `dags_folder` path to the `airflow-dbt-demo` code repository and save. For example:
         ```
-        dags_folder = /Users/username/airflow-dbt/dags
+        dags_folder = /Users/username/airflow-dbt-demo/dags
         ```
     
     - Optional - remove DAG examples. When set to true, many examples are provided on the home page in the UI when Airflow is started
