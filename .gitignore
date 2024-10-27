@@ -15,6 +15,7 @@ venv/
 terraform.tfstate
 terraform.tfstate.backup
 .terraform/
+.tfvars
 
 # Python cache files
 __pycashe__/
