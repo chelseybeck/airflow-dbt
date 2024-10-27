@@ -1,19 +1,19 @@
 # Analytics Pipeline | dbt, Airflow, and Bigquery
 
-This repository contains a demo with instructions for scheduling an analytics pipeline locally using Apache Airflow to schedule dbt jobs for a BigQuery warehouse.
+Demo for running an analytics pipeline locally using Apache Airflow, dbt, and BigQuery (BQ).
 
-We're using Google Cloud Platform (GCP) and BigQuery (BQ) for the purposes of this demo, but if you're familiar with another public cloud or warehouse, you can substitute where applicable (i.e. `dbt-bigquery` -> `dbt-snowflake`).
+We're using Google Cloud Platform (GCP) and BQ for the purposes of this demo, but if you're familiar with another public cloud or warehouse, you can substitute where applicable (i.e. `dbt-bigquery` -> `dbt-snowflake`).
 
 ## Getting Started
 
-### Clone this repo (or fork it if you'd like to contribute)
+### Clone this repo
 Clone the repo and open a terminal from the cloned directory
 
 ```bash
 git clone https://github.com/chelseybeck/airflow-dbt-demo.git
 ```
 
-This repo is still under development and updated regularly, so pull often (at least daily) to get the latest
+This demo is still under development and updated regularly, so pull often (at least daily) to get the latest
 
 ```bash
 git pull
@@ -21,10 +21,10 @@ git pull
 
 ### Prerequisites
 
-- [GCP account](https://cloud.google.com/solutions/smb)
 - [Python 3.11+](https://www.python.org/downloads/)
 - [Poetry](https://python-poetry.org/docs/)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [GCP account](https://cloud.google.com/solutions/smb)
 - GCP Service Account (+ key) with the following permissions (allows Airflow to connect to BQ):
   - BigQuery Data Editor
   - BigQuery Data Viewer
@@ -43,7 +43,7 @@ We're using Poetry ([installation](https://python-poetry.org/docs/) is a pre-req
     ```
 
 2. Open Poetry Shell
-    Note: every new terminal needs to run in this shell - it's where the dependencies are installed (or run commands with `poetry run`)
+    Note: every new terminal should run in this virtual environment (unless using a customized venv). [Learn more](https://python-poetry.org/docs/basic-usage/#using-your-virtual-environment)
 
     ```bash
     poetry shell
@@ -52,9 +52,11 @@ We're using Poetry ([installation](https://python-poetry.org/docs/) is a pre-req
 ## Set up Environment Variables
 
 1. Copy the example `.env` file
+
     ```bash
     cp .env.example .env
     ```
+
 2. Replace the file paths in `.env` with your system paths
 
 ## Initialize Airflow and Run DAG
@@ -70,7 +72,7 @@ We're using Poetry ([installation](https://python-poetry.org/docs/) is a pre-req
 
     - Update DAG directory
     
-        Navigate to Airflow's home directory and open the `airflow.cfg` file. 
+        Navigate to Airflow's home directory and open the `airflow.cfg` file. I.e.
     
         ```bash
         nano ~/airflow/airflow.cfg
@@ -105,7 +107,7 @@ We're using Poetry ([installation](https://python-poetry.org/docs/) is a pre-req
     --email spiderman@superhero.org
     ```
 
-4. Add Google Cloud connection
+4. Add Google Cloud connection - allows connection to BQ - Airflow picks up credentials from your `.env` file
 
     ```bash
     airflow connections add 'google_cloud_default' \
