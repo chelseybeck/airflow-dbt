@@ -23,6 +23,7 @@ git pull
 
 - [GCP account](https://cloud.google.com/solutions/smb)
 - Python 3.11+ - [download](https://www.python.org/downloads/)
+- Poetry [install](https://python-poetry.org/docs/)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [Google Cloud Command Line Interface (CLI)](https://cloud.google.com/sdk/docs/install) (for authentication with BigQuery)
 - GCP Service Account with the following permissions:
@@ -34,37 +35,17 @@ git pull
 
 ## Python Environment Setup
 
-It's recommended to use a virtual environment to isolate dependencies. Here's how to set it up:
+We're using poetry (installation is a pre-requisite)
 
-1. Create a virtual environment:
-
+1. Install dependencies
     ```bash
-    python3 -m venv venv
+    poetry install
     ```
 
-2. Activate the virtual environment:
-- On macOS/Linux:
-
+2. Open Poetry Shell
     ```bash
-    source venv/bin/activate
+    poetry shell
     ```
-- On Windows:
-
-    ```bash
-    venv\Scripts\activate
-    ```
-
-3. Upgrade `pip`
-
-    ```bash
-    pip install --upgrade pip
-    ```
-
-### Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
 
 ## Set up Environment Variables
 
@@ -77,51 +58,63 @@ pip install -r requirements.txt
 ## Initialize Airflow and Run DAG
 
 
-1. Update DAG directory location:
+1. Update Airflow configuration:
 
-    Find Airflow's Home directory
-    - on Windows:
+    - Find Airflow's Home directory
+    
         ```bash
-        echo %AIRFLOW_HOME%
+        airflow info
         ```
-    - on macOS/Linux
-        ```bash
-        echo $AIRFLOW_HOME
-        ```
+    - Update DAG directory
     Navigate to Airflow's home directory and open the `airflow.cfg` file. Change the `dags_folder` path to the `airflow-dbt` code repository and save. For example:
-    ```
-    dags_folder = /Users/username/GitHub/airflow-dbt/dags
-    ```
-    Remove authentication (easiest option if running demo locally, otherwise [set it up](https://airflow.apache.org/docs/apache-airflow-providers-fab/stable/auth-manager/api-authentication.html))
-    ```
-    auth_backend # delete this line or set it up
-    ```
-    Optional - remove DAG examples. When set to true, many examples are provided on the home page in the UI when Airflow is started
-    ```
-    load_examples = False
-    ```
+        ```
+        dags_folder = /Users/username/airflow-dbt/dags
+        ```
+    
+    - Optional - remove DAG examples. When set to true, many examples are provided on the home page in the UI when Airflow is started
+        ```
+        load_examples = False
+        ```
 
 2. Initialize the database
     ```bash
     airflow db migrate
     ```
 
-3. Start the Airflow webserver:
+3. Create a user
+    ```bash
+    # create an admin user
+    airflow users create \
+    --username admin \
+    --firstname Peter \
+    --lastname Parker \
+    --role Admin \
+    --email spiderman@superhero.org
+    ```
+
+4. Add Google Cloud connection
+    ```bash
+    airflow connections add 'google_cloud_default' \
+    --conn-type 'google_cloud_platform' \
+    --conn-extra "{\"extra__google_cloud_platform__project\": \"$GCP_PROJECT\"}"
+    ```
+
+4. Start the Airflow webserver:
 
     ```bash
     airflow webserver --port 8080
     ```
 
-    Access the Airflow UI at `localhost:8080/home`
+    Access the Airflow UI at `localhost:8080/home` & login
     [airflow home](http://0.0.0.0:8080/home)
 
-4. Start the scheduler
+5. Start the scheduler
 
     ```bash
     airflow scheduler
     ```
 
-5. Run the DAGs from [Airflow's UI](http://0.0.0.0:8080/home):
+6. Run the DAGs from [Airflow's UI](http://0.0.0.0:8080/home):
   - Click on the DAG `spotify_ingestion_dag`
     - Loads Spotify data from a csv file into BigQuery
   - Click the 'play' button to trigger the DAG (upper right corner)
