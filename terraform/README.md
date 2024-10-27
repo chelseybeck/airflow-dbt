@@ -18,35 +18,42 @@ Using your terminal:
 
 1. Navigate to the `terraform` directory
 
-```bash
-cd terraform
-```
+    ```bash
+    cd terraform
+    ```
 
 2. Open `terraform.tfvars` and update with your project id and location to save key file
+    ```hcl
+    // replace with your GCP project ID
+    project_id           = "gcp-project-id"
+
+    // replace with the location to save service account key file
+    key_file_path        = "/Users/username/bigquery-airflow-dbt.json"
+    ```
 
 3. Initialize Terraform
 
-```bash
-terraform init
-```
+    ```bash
+    terraform init
+    ```
 
 4. Run a Plan
 Returns an output of resources to be created
 
-```bash
-terraform plan
-``` 
+    ```bash
+    terraform plan
+    ``` 
 
 5. Apply configuration
 Applies the configuration as reflected on the plan
 
-```bash
-terraform apply
-```
+    ```bash
+    terraform apply
+    ```
 
 6. Destroy (optional)
 If you would like to destroy the resources used for this demo once you're done
 
-```bash
-terraform destroy
-```
+    ```bash
+    terraform destroy
+    ```
