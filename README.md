@@ -13,7 +13,7 @@ Clone the repo and open a terminal from the cloned directory
 git clone https://github.com/chelseybeck/airflow-dbt-demo.git
 ```
 
-This repo is updated regularly, so pull often (at least daily) to get the latest
+This repo is still under development and updated regularly, so pull often (at least daily) to get the latest
 
 ```bash
 git pull
@@ -22,27 +22,29 @@ git pull
 ### Prerequisites
 
 - [GCP account](https://cloud.google.com/solutions/smb)
-- Python 3.11+ - [download](https://www.python.org/downloads/)
-- Poetry [install](https://python-poetry.org/docs/)
+- [Python 3.11+](https://www.python.org/downloads/)
+- [Poetry](https://python-poetry.org/docs/)
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [Google Cloud Command Line Interface (CLI)](https://cloud.google.com/sdk/docs/install) (for authentication with BigQuery)
-- GCP Service Account with the following permissions:
+- GCP Service Account (+ key) with the following permissions (allows Airflow to connect to BQ):
   - BigQuery Data Editor
   - BigQuery Data Viewer
   - Bigquery Job User
 
-  The service account can be [created manually](https://cloud.google.com/iam/docs/service-accounts-create#creating) in the GCP UI or using the Terraform module in the `terraform` directory - [see details](/terraform/README.md)
+  The service account can be [created manually](https://cloud.google.com/iam/docs/service-accounts-create#creating) in the GCP UI or locally using the Terraform module in the `terraform` directory - [see details](/terraform/README.md)
 
 ## Python Environment Setup
 
-We're using poetry (installation is a pre-requisite)
+We're using Poetry ([installation](https://python-poetry.org/docs/) is a pre-requisite)
 
 1. Install dependencies
+
     ```bash
     poetry install
     ```
 
 2. Open Poetry Shell
+    Note: every new terminal needs to run in this shell - it's where the dependencies are installed (or run commands with `poetry run`)
+
     ```bash
     poetry shell
     ```
@@ -65,15 +67,17 @@ We're using poetry (installation is a pre-requisite)
         ```bash
         airflow info
         ```
+
     - Update DAG directory
     
-    Navigate to Airflow's home directory and open the `airflow.cfg` file. 
+        Navigate to Airflow's home directory and open the `airflow.cfg` file. 
     
-    ```bash
-    nano ~/airflow/airflow.cfg
-    ```
+        ```bash
+        nano ~/airflow/airflow.cfg
+        ```
 
-    Change the `dags_folder` path to the `airflow-dbt-demo` code repository and save. For example:
+    - Change the `dags_folder` path to the `airflow-dbt-demo` code repository and save. For example:
+
         ```
         dags_folder = /Users/username/airflow-dbt-demo/dags
         ```
@@ -84,11 +88,13 @@ We're using poetry (installation is a pre-requisite)
         ```
 
 2. Initialize the database
+
     ```bash
     airflow db migrate
     ```
 
 3. Create a user
+
     ```bash
     # create an admin user
     airflow users create \
@@ -100,6 +106,7 @@ We're using poetry (installation is a pre-requisite)
     ```
 
 4. Add Google Cloud connection
+
     ```bash
     airflow connections add 'google_cloud_default' \
     --conn-type 'google_cloud_platform' \
