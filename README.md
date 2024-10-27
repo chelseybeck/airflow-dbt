@@ -10,7 +10,7 @@ We're using Google Cloud Platform (GCP) and BigQuery (BQ) for the purposes of th
 Clone the repo and open a terminal from the cloned directory
 
 ```bash
-git clone https://github.com/chelseybeck/airflow-dbt.git
+git clone https://github.com/chelseybeck/airflow-dbt-demo.git
 ```
 
 This repo is updated regularly, so pull often (at least daily) to get the latest
