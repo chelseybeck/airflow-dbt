@@ -1,8 +1,6 @@
 from airflow import DAG
 from airflow_dbt.operators.dbt_operator import DbtRunOperator, DbtTestOperator
 from datetime import datetime
-from dotenv import load_dotenv
-import os
 
 default_args = {
     'start_date': datetime(2024, 10, 18),
@@ -10,12 +8,8 @@ default_args = {
     'email_on_retry': False,
 }
 
-# Load the environment variables from the .env file
-load_dotenv()
-
-# Set in .env file
-profiles_dir = os.getenv('PROFILES_DIR')  
-dbt_project = os.getenv('DBT_PROJECT_DIR')
+profiles_dir = '/app/analytics'  
+dbt_project = '/app/analytics'
 
 with DAG('daily_dbt_dag', default_args=default_args, schedule_interval='@daily', catchup=False) as dag:
 
