@@ -6,135 +6,77 @@ We're using Google Cloud Platform (GCP) and BQ for the purposes of this demo, bu
 
 ## Getting Started
 
-### Clone this repo
+### Clone this repo 
+[Git required](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+
 Clone the repo and open a terminal from the cloned directory
 
 ```bash
 git clone https://github.com/chelseybeck/airflow-dbt-demo.git
 ```
 
-This demo is still under development and updated regularly, so pull often (at least daily) to get the latest
-
-```bash
-git pull
-```
-
 ### Prerequisites
-
-- [Python 3.11+](https://www.python.org/downloads/)
-- [Poetry](https://python-poetry.org/docs/)
-- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [Docker](https://docs.docker.com/engine/install/)
 - [GCP account](https://cloud.google.com/solutions/smb)
-- GCP Service Account (+ key) with the following permissions (allows Airflow to connect to BQ):
+- GCP Service Account (+ key.json) with the following permissions:
   - BigQuery Data Editor
   - BigQuery Data Viewer
   - Bigquery Job User
 
   The service account can be [created manually](https://cloud.google.com/iam/docs/service-accounts-create#creating) in the GCP UI or locally using the Terraform module in the `terraform` directory - [see details](/terraform/README.md)
 
-## Python Environment Setup
+#### Update `.env` variables
 
-We're using Poetry ([installation](https://python-poetry.org/docs/) is a pre-requisite)
+```bash
+cp .env.example .env
+```
 
-1. Install dependencies
+Open `.env` and update the `GCP_PROJECT` and `LOCAL_GOOGLE_CREDENTIALS_PATH`
 
-    ```bash
-    poetry install
-    ```
+### Run Airflow in a Docker container
 
-2. Open Poetry Shell
-    Note: every new terminal should run in this virtual environment (unless using a customized venv). [Learn more](https://python-poetry.org/docs/basic-usage/#using-your-virtual-environment)
+Build the Docker image
+```bash
+sudo docker build -t my-airflow-dbt .
+```
 
-    ```bash
-    poetry shell
-    ```
+Run the new container
+```bash
+docker run --env-file .env \
+  -p 8080:8080 \
+  -v ${LOCAL_GOOGLE_CREDENTIALS_PATH}:/app/bigquery-airflow-dbt.json \
+  --name airflow-dbt-demo-container \
+  airflow-dbt-demo
+```
 
-## Set up Environment Variables
+Create Airflow admin user
+```bash
+docker exec -it airflow-dbt-demo-container airflow users create \
+--username gstacy \
+--firstname Gwen \
+--lastname Stacy \
+--role Admin \
+--email gstacy@spiderverse.com
+```
 
-1. Copy the example `.env` file
+Access the [Airflow UI](http://0.0.0.0:8080/home) and login with admin user credentials
 
-    ```bash
-    cp .env.example .env
-    ```
+Turn on the `spotify_ingestion_dag` (which will trigger it to run) and once it completes, turn on the `daily_dbt_dag`. 
 
-2. Replace the file paths in `.env` with your system paths
+You should now see two new datasets in BQ:
 
-## Initialize Airflow and Run DAG
+`raw_ingestion` - contains the raw spotify table `spotify_top_2023_metadata`
 
+`dev_spotify_derived` - contains the dbt models as defined in the models directory
 
-1. Update Airflow configuration:
+#### Helpful Docker commands:
 
-    - Find Airflow's Home directory
-    
-        ```bash
-        airflow info
-        ```
+Stop the existing container (if running)
+```bash
+docker stop airflow-dbt-demo-container
+```
 
-    - Update DAG directory
-    
-        Navigate to Airflow's home directory and open the `airflow.cfg` file. I.e.
-    
-        ```bash
-        nano ~/airflow/airflow.cfg
-        ```
-
-    - Change the `dags_folder` path to the `airflow-dbt-demo` code repository and save. For example:
-
-        ```
-        dags_folder = /Users/username/airflow-dbt-demo/dags
-        ```
-    
-    - Optional - remove DAG examples. When set to true, many examples are provided on the home page in the UI when Airflow is started
-        ```
-        load_examples = False
-        ```
-
-2. Initialize the database
-
-    ```bash
-    airflow db migrate
-    ```
-
-3. Create a user
-
-    ```bash
-    # create an admin user
-    airflow users create \
-    --username admin \
-    --firstname Peter \
-    --lastname Parker \
-    --role Admin \
-    --email spiderman@superhero.org
-    ```
-
-4. Add Google Cloud connection - allows connection to BQ - Airflow picks up credentials from your `.env` file
-
-    ```bash
-    airflow connections add 'google_cloud_default' \
-    --conn-type 'google_cloud_platform' \
-    --conn-extra "{\"extra__google_cloud_platform__project\": \"$GCP_PROJECT\"}"
-    ```
-
-4. Start the Airflow webserver:
-
-    ```bash
-    airflow webserver --port 8080
-    ```
-
-    Access the Airflow UI at `localhost:8080/home` & login
-    [airflow home](http://0.0.0.0:8080/home)
-
-5. Start the scheduler
-
-    ```bash
-    airflow scheduler
-    ```
-
-6. Run the DAGs from [Airflow's UI](http://0.0.0.0:8080/home):
-  - Click on the DAG `spotify_ingestion_dag`
-    - Loads Spotify data from a csv file into BigQuery
-  - Click the 'play' button to trigger the DAG (upper right corner)
-
-  - Click on the DAG `daily_dbt_dag`
-    - Runs dbt jobs ([models directory](/analytics/models)) 
-  - Click the 'play' button to trigger the DAG (upper right corner)
+Remove the existing container
+```bash
+docker rm airflow-dbt-demo-container
+```
