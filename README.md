@@ -48,7 +48,7 @@ Run the new container - change `local-path-to-key` to your local path
 ```bash
 sudo docker run --env-file .env \
   -p 8080:8080 \
-  -v /local-path-to-key/bigquery-key.json:/app/bigquery-airflow-dbt.json \
+  -v /local-path-to-key/bigquery-key.json:/app/bigquery-key.json \
   --name airflow-dbt-demo-container \
   airflow-dbt-demo
 ```
