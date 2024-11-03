@@ -8,23 +8,22 @@ default_args = {
     'email_on_retry': False,
 }
 
-profiles_dir = '/app/analytics'  
-dbt_project = '/app/analytics'
+dbt_project_dir = '/app/analytics'
 
 with DAG('daily_dbt_dag', default_args=default_args, schedule_interval='@daily', catchup=False) as dag:
 
     # Task to run dbt models using DbtRunOperator
     dbt_run = DbtRunOperator(
         task_id='dbt_run',
-        dir=dbt_project,
-        profiles_dir=profiles_dir,
+        dir=dbt_project_dir,
+        profiles_dir=dbt_project_dir,
     )
 
     # Task to run dbt tests using DbtTestOperator
     dbt_test = DbtTestOperator(
         task_id='dbt_test',
-        dir=dbt_project,
-        profiles_dir=profiles_dir,
+        dir=dbt_project_dir,
+        profiles_dir=dbt_project_dir,
         retries=0  # Optional: disable retries
     )
 
