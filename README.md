@@ -37,7 +37,7 @@ Open `.env` and update the `GCP_PROJECT` with your project ID
 
 Build the Docker image
 ```bash
-sudo docker build -t my-airflow-dbt .
+DOCKER_BUILDKIT=0 sudo docker build -t airflow-dbt-demo .
 ```
 
 Run the new container - change `local-path-to-key` to your local path
