@@ -31,7 +31,7 @@ git clone https://github.com/chelseybeck/airflow-dbt-demo.git
 cp .env.example .env
 ```
 
-Open `.env` and update the `GCP_PROJECT` and `LOCAL_GOOGLE_CREDENTIALS_PATH`
+Open `.env` and update the `GCP_PROJECT` with your project ID
 
 ### Run Airflow in a Docker container
 
@@ -40,14 +40,15 @@ Build the Docker image
 sudo docker build -t my-airflow-dbt .
 ```
 
-Run the new container
+Run the new container - change `local-path-to-key` to your local path
 ```bash
-docker run --env-file .env \
+sudo docker run --env-file .env \
   -p 8080:8080 \
-  -v ${LOCAL_GOOGLE_CREDENTIALS_PATH}:/app/bigquery-airflow-dbt.json \
+  -v /local-path-to-key/bigquery-airflow-dbt.json:/app/bigquery-airflow-dbt.json \
   --name airflow-dbt-demo-container \
   airflow-dbt-demo
 ```
+
 
 Create Airflow admin user
 ```bash
