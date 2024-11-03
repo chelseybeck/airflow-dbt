@@ -4,7 +4,7 @@ Demo for running an analytics pipeline locally using Apache Airflow, dbt, and Bi
 
 We're using Google Cloud Platform (GCP) and BQ for the purposes of this demo, but if you're familiar with another public cloud or warehouse, you can substitute where applicable (i.e. `dbt-bigquery` -> `dbt-snowflake`)
 
-dbt models can be found in the [models](/analytics/models) directory. Add `.sql` and `.yml` files there to create tables or views in the warehouse using this pipeline
+dbt models can be found in the [analytics](/analytics) directory. Add `.sql` and `.yml` files there to create tables or views in the warehouse using this pipeline
 
 The below instructions will walk you through deploying Airflow in a local Docker container. This was chosen for easy setup and development, but a cloud hosted Airflow instance is necessary for a production-level solution. Each major public cloud provider supports Airflow hosting
 
