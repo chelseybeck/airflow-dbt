@@ -2,7 +2,7 @@
 FROM python:3.12
 
 # Set environment variables
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
 ENV AIRFLOW_HOME=/root/airflow
 
 # Install system dependencies for Airflow and dbt
@@ -26,11 +26,6 @@ WORKDIR /app
 
 # Copy custom airflow.cfg to the AIRFLOW_HOME directory
 COPY airflow.cfg $AIRFLOW_HOME/airflow.cfg
-
-# Load environment variables from .env
-ENV DBT_PROJECT_DIR="/app/analytics"
-ENV GOOGLE_APPLICATION_CREDENTIALS="/app/bigquery-airflow-dbt.json"
-ENV PROFILES_DIR="/app/analytics"
 
 # Expose port 8080 for Airflow web server
 EXPOSE 8080
