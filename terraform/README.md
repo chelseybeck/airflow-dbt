@@ -28,7 +28,7 @@ Using your terminal:
     project_id           = "gcp-project-id"
 
     // replace with the location to save service account key file
-    key_file_path        = "/Users/username/bigquery-airflow-dbt.json"
+    key_file_path        = "/Users/username/bigquery-key.json"
     ```
 
 3. Initialize Terraform
