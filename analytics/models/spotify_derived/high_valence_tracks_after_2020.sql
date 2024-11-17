@@ -9,6 +9,7 @@ FROM
 WHERE
   released_year > 2020
   AND valence_pct > 70
+GROUP BY 1, 2, 3, 4, 5
 ORDER BY
   valence_pct DESC,
   track_name,
