@@ -22,7 +22,7 @@ git clone https://github.com/chelseybeck/airflow-dbt-demo.git
 ### Prerequisites
 - [Docker](https://docs.docker.com/engine/install/)
 - [GCP account](https://cloud.google.com/solutions/smb)
-- GCP Service Account (+ key.json) with the following permissions:
+- GCP Service Account (+ bigquery-key.json) with the following permissions:
   - BigQuery Data Editor
   - BigQuery Data Viewer
   - Bigquery Job User
