@@ -1,11 +1,11 @@
-SELECT
-  artist_name,
-  SUM(streams) AS total_streams
-FROM
-  {{ source("raw_ingestion", "spotify_top_2023_metadata") }}
-GROUP BY
-  artist_name
-ORDER BY
-  total_streams DESC
-LIMIT
-  10
+select
+    artist_name,
+    SUM(streams) as total_streams
+from
+    {{ source("raw_ingestion", "spotify_top_2023_metadata") }}
+group by
+    artist_name
+order by
+    total_streams desc
+limit
+    10
