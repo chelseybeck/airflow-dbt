@@ -5,22 +5,27 @@ models:
       'The happiest songs released after 2020.'
     columns:
       - name: track_name
+        description: The name of the track (song)
         data_type: STRING
         data_tests:
           - not_null
       - name: artist_name
+        description: The name of the artist(s) associated with the track
         data_type: STRING
         data_tests:
           - not_null
       - name: released_year
+        description: The year the track was released
         data_type: INTEGER
         data_tests:
           - not_null
       - name: valence_pct
+        description: How the track scores on the valence meter
         data_type: INTEGER
         data_tests:
           - not_null
       - name: streams
+        description: The total number of times the track was streamed
         data_type: INTEGER
         data_tests:
           - not_null

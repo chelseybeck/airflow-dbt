@@ -5,18 +5,22 @@ models:
       'Top 25 songs ranked by danceability.'
     columns:
       - name: track_name
+        description: The name of the track (song)
         data_type: STRING
         data_tests:
           - not_null
       - name: artist_name
+        description: The name of the artist(s) associated with the track
         data_type: STRING
         data_tests:
           - not_null
       - name: avg_danceability
+        description: The measured danceability of a track
         data_type: INTEGER
         data_tests:
           - not_null
       - name: avg_energy
+        description: The energy score of the track
         data_type: INTEGER
         data_tests:
           - not_null
