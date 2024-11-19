@@ -19,7 +19,7 @@ load_dotenv()
 project_id = os.getenv('GCP_PROJECT')
 
 raw_ingestion_dataset = 'raw_ingestion'
-raw_spotify_table = 'spotify_top_2023_metadata'
+data_directory = './spotify_data'
 
 with DAG('spotify_ingestion_dag', default_args=default_args, schedule_interval='@daily', catchup=False) as dag:
 
@@ -39,24 +39,29 @@ with DAG('spotify_ingestion_dag', default_args=default_args, schedule_interval='
         location='US'  # Set your dataset location, adjust if different
     )
 
-    # Function to load raw Spotify data into BigQuery
-    def load_csv_to_bq():
+    # Function to load all CSV files in a directory into BigQuery
+    def load_csvs_to_bq():
         hook = BigQueryHook()
         bq_client = hook.get_client()
 
-        # Read the CSV file into a pandas DataFrame
-        df = pd.read_csv('./spotify_top_2023_metadata.csv')
+        # Iterate through all CSV files in the specified directory
+        for file_name in os.listdir(data_directory):
+            if file_name.endswith('.csv'):
+                table_name = file_name.replace('.csv', '')
+                file_path = os.path.join(data_directory, file_name)
+                
+                # Read the CSV file into a pandas DataFrame
+                df = pd.read_csv(file_path)
 
-        # Load DataFrame into BigQuery table
-        bq_client.load_table_from_dataframe(
-            df, f'{raw_ingestion_dataset}.{raw_spotify_table}'
-        )
+                # Load DataFrame into BigQuery table
+                table_id = f'{project_id}.{raw_ingestion_dataset}.{table_name}'
+                bq_client.load_table_from_dataframe(df, table_id)
 
-    # Task to load local CSV file into BigQuery
-    load_csv_to_bq_task = PythonOperator(
-        task_id='load_csv_to_bq',
-        python_callable=load_csv_to_bq,
+    # Task to load all CSV files from the directory into BigQuery
+    load_csvs_to_bq_task = PythonOperator(
+        task_id='load_csvs_to_bq',
+        python_callable=load_csvs_to_bq,
     )
 
     # Define task order
-    create_dataset_task >> load_csv_to_bq_task
+    create_dataset_task >> load_csvs_to_bq_task
