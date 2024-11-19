@@ -5,7 +5,7 @@ select
     valence_pct,
     streams
 from
-    {{ source("raw_ingestion", "spotify_top_2023_metadata") }}
+    {{ source("spotify_raw", "spotify_top_2023_metadata") }}
 where
     released_year > 2020
     and valence_pct > 70
