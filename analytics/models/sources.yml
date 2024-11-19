@@ -1,9 +1,10 @@
 version: 2
 
 sources:
-  - name: raw_ingestion
-    description: A sample of metadata from songs played on Spotify in 2023.
+  - name: spotify_raw
+    description: Sample data from spotify
     database: storied-storm-353916
-    schema: raw_ingestion
+    schema: spotify_raw
     tables:
       - name: spotify_top_2023_metadata
+      - name: spotify_tracks
