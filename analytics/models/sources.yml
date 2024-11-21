@@ -4,7 +4,7 @@ sources:
   - name: spotify_raw
     description: Sample data from spotify
     database: storied-storm-353916
-    schema: spotify_raw
+    schema: raw_ingestion
     tables:
       - name: spotify_top_2023_metadata
       - name: spotify_tracks

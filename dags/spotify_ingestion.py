@@ -18,7 +18,7 @@ load_dotenv()
 # Set in .env file
 project_id = os.getenv('GCP_PROJECT')
 
-raw_ingestion_dataset = 'raw_ingestion'
+raw_ingestion_dataset = 'spotify_raw'
 data_directory = './spotify_data'
 
 with DAG('spotify_ingestion_dag', default_args=default_args, schedule_interval='@daily', catchup=False) as dag:

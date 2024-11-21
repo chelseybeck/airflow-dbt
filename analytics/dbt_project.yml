@@ -34,7 +34,22 @@ models:
     # Apply to all models under analytics_pipeline
     +on_schema_change: "append_new_columns"
 
-    # Transformed Spotify data, materialized as tables in the spotify_derived dataset
-    spotify_derived:
-      +schema: spotify_derived  # Specify the BigQuery dataset
+    # Transformed data, materialized as tables in the derived dataset
+    derived:
+      +schema: derived  # Specify the BigQuery dataset
       +materialized: table
+      +persist_docs:
+        relation: true
+        columns: true
+
+    spotify_derived:  # Add configuration for spotify_derived directory
+      +schema: spotify_derived
+      +materialized: table
+      +persist_docs:
+        relation: true
+        columns: true
+
+    staging:
+      +schema: staging
+      +materialized: view
+

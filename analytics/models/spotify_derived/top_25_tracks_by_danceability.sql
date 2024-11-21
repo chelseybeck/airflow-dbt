@@ -4,7 +4,7 @@ select
     AVG(danceability_pct) as avg_danceability,
     AVG(energy_pct) as avg_energy
 from
-    {{ source("raw_ingestion", "spotify_top_2023_metadata") }}
+    {{ source("spotify_raw", "spotify_top_2023_metadata") }}
 group by
     track_name,
     artist_name
